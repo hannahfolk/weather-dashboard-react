@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/weather-dashboard-react/static/css/main.e290c31e.chunk.css",
+    "main.js": "/weather-dashboard-react/static/js/main.505c4c19.chunk.js",
+    "main.js.map": "/weather-dashboard-react/static/js/main.505c4c19.chunk.js.map",
+    "runtime-main.js": "/weather-dashboard-react/static/js/runtime-main.e51fed23.js",
+    "runtime-main.js.map": "/weather-dashboard-react/static/js/runtime-main.e51fed23.js.map",
+    "static/js/2.a9d28e9b.chunk.js": "/weather-dashboard-react/static/js/2.a9d28e9b.chunk.js",
+    "static/js/2.a9d28e9b.chunk.js.map": "/weather-dashboard-react/static/js/2.a9d28e9b.chunk.js.map",
+    "index.html": "/weather-dashboard-react/index.html",
+    "precache-manifest.bd7619c6254332e36f0da1d5f4bd2d3c.js": "/weather-dashboard-react/precache-manifest.bd7619c6254332e36f0da1d5f4bd2d3c.js",
+    "service-worker.js": "/weather-dashboard-react/service-worker.js",
+    "static/css/main.e290c31e.chunk.css.map": "/weather-dashboard-react/static/css/main.e290c31e.chunk.css.map",
+    "static/js/2.a9d28e9b.chunk.js.LICENSE.txt": "/weather-dashboard-react/static/js/2.a9d28e9b.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e51fed23.js",
+    "static/js/2.a9d28e9b.chunk.js",
+    "static/css/main.e290c31e.chunk.css",
+    "static/js/main.505c4c19.chunk.js"
+  ]
+}
