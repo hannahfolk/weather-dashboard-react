@@ -31,7 +31,7 @@ React version of [Weather Dashboard](https://www.github.com/hannahfolk/weather-d
 <!-- ABOUT THE PROJECT -->
 ## About The Project
     
-[![Product Name Screen Shot][product-screenshot]]()
+[![Product Name Screen Shot][product-screenshot]](https://hannahfolk.github.io/weather-dashboard-react/)
     
     
 ### Built With
