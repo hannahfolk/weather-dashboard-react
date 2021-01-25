@@ -1,0 +1,11 @@
+.city {
+    color: black;
+}
+
+.btn-link:hover, .btn-link:focus, .btn-link:active {
+    text-decoration: none;
+}
+
+.searchHistoryCard {
+    padding: 5px;
+}
