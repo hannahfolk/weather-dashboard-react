@@ -27,7 +27,6 @@ React version of [Weather Dashboard](https://www.github.com/hannahfolk/weather-d
 * [Installation](#installation)
 * [Contact](#contact)
 * [License](#license)
-* [Acknowledgements](#acknowledgements)
     
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -81,12 +80,6 @@ If you want to contact me you can reach me at [hfolk25@gmail.com](hfolk25@gmail.
 <!--- If you're not sure which open license to use see https://choosealicense.com/--->
         
 This project uses the [MIT][license-url] license.
-    
-    
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-    
-
     
     
 <!-- MARKDOWN LINKS & IMAGES -->
