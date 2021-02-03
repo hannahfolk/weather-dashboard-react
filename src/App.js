@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Wrapper from "./components/Wrapper";
 import { Container, Row } from "./components/Grid";
@@ -23,153 +23,152 @@ function App() {
     // If storedCities is not null, set cities state to stored cities and render cities
     if (storedCities !== null) {
       setCities(storedCities);
-    };
-  }, [])
+    }
+  }, []);
 
-  const handleInputChange = event => {
-    const { value }  = event.target;
+  const handleInputChange = (event) => {
+    const { value } = event.target;
     setSearchInput(value);
   };
 
-  const handleFormSubmit = event => {
-      event.preventDefault();
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
 
-      // Push user-inputted city into cities array, unshift to move them to beginning of array
-      cities.unshift(searchInput);
+    // Push user-inputted city into cities array, unshift to move them to beginning of array
+    cities.unshift(searchInput);
 
-      // Get rid of duplicate entries
-      const uniqueCities = new Set(cities);
-      const newCities = [...uniqueCities];
+    // Get rid of duplicate entries
+    const uniqueCities = new Set(cities);
+    const newCities = [...uniqueCities];
 
-      // Save cities to local storage
-      localStorage.setItem("cities", JSON.stringify(cities));
+    // Save cities to local storage
+    localStorage.setItem("cities", JSON.stringify(cities));
 
-      // Clear search input form
-      setSearchInput("");
-      
-      // Set cities array to the newCities array with duplicates removed
-      setCities(newCities);
+    // Clear search input form
+    setSearchInput("");
 
-      // Make API calls
-      runAPIs(searchInput);
+    // Set cities array to the newCities array with duplicates removed
+    setCities(newCities);
+
+    // Make API calls
+    runAPIs(searchInput);
   };
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     runAPIs(event.target.value);
   };
 
-  const runAPIs = city => {
+  const runAPIs = (city) => {
     // Make an API call to openweathermap.org
-    API.getCurrentWeather(city)
-      .then(response => {
-        console.log(response.data);
+    API.getCurrentWeather(city).then((response) => {
+      const currentDate = moment().format("MM/DD/YYYY");
+      const cityName = response.data.name;
+      const temp = response.data.main.temp;
+      const humidity = response.data.main.humidity;
+      const windSpeed = response.data.wind.speed;
+      const iconURL =
+        "https://openweathermap.org/img/w/" +
+        response.data.weather[0].icon +
+        ".png";
 
-        const currentDate = moment().format("MM/DD/YYYY");
-        const cityName = response.data.name;
-        const temp = response.data.main.temp;
-        const humidity = response.data.main.humidity;
-        const windSpeed = response.data.wind.speed;
-        const iconURL = "https://openweathermap.org/img/w/" + response.data.weather[0].icon + ".png";
-        console.log("Temperature is " + temp + " degrees Fahrenheit");
-        console.log("Humidity is " + humidity + " %");
-        console.log("Wind speed is " + windSpeed + " MPH");
+      const lat = response.data.coord.lat;
+      const lon = response.data.coord.lon;
 
-        const lat = response.data.coord.lat;
-        const lon = response.data.coord.lon;
+      API.getUVI(lat, lon).then((uviResponse) => {
+        const uvi = uviResponse.data.current.uvi;
 
-        API.getUVI(lat, lon)
-          .then(uviResponse => {
-            const uvi = uviResponse.current.uvi;
-            console.log("UVI is " + uvi);
-
-            const uviStyle = {
-              borderRadius: "0.25rem",
-              fontSize: "1rem",
-              padding: "5px"
-            };
-
-            if (uvi < 3) {
-              // Give it the color of green
-              uviStyle.backgroundColor = "#99cc00";
-            } else if (uvi >= 3 && uvi < 6) {
-              // Give it the color of yellow
-              uviStyle.backgroundColor = "#ffff01";
-            } else if (uvi >= 6 && uvi < 8) {
-              // Give it the color of orange
-              uviStyle.backgroundColor = "#ff9928";
-            } else if (uvi >=8 && uvi < 11) {
-              // Give it the color of red
-              uviStyle.backgroundColor = "#ff0100";
-            } else if (uvi >= 11) {
-              // Give it the color of purple
-              uviStyle.backgroundColor = "#be00be";
-            }
-
-            setCurrentWeatherCard(
-              <CurrentWeather
-                cityName={cityName}
-                currentDate={currentDate}
-                iconURL={iconURL}
-                temp={temp}
-                humidity={humidity}
-                windSpeed={windSpeed}
-                uvi={uvi}
-                uviStyle={uviStyle}
-              />
-            );
-          });
-      });
-
-    API.getForecast(city)
-      .then(response => {
-        console.log(response.data.list);
-
-        const currentHour = moment().format("HH");
-        console.log(currentHour);
-
-        // Set default time block of three hours to 12 AM
-        let currentTimeBlock = "00:00:00";
-
-        // Change the current time block of three hours based on currentHour
-        if (currentHour >= 0 && currentHour < 3) {
-          currentTimeBlock = "00:00:00";
-        } else if (currentHour >= 3 && currentHour < 6) {
-          currentTimeBlock = "03:00:00";
-        } else if (currentHour >= 6 && currentHour < 9) {
-          currentTimeBlock = "06:00:00";
-        } else if (currentHour >= 9 && currentHour < 12) {
-          currentTimeBlock = "09:00:00";
-        } else if (currentHour >= 12 && currentHour < 15) {
-          currentTimeBlock = "12:00:00";
-        } else if (currentHour >= 15 && currentHour < 18) {
-          currentTimeBlock = "15:00:00";
-        } else if (currentHour >= 18 && currentHour < 21) {
-          currentTimeBlock = "18:00:00";
-        } else if (currentHour >= 21 && currentHour < 24) {
-          currentTimeBlock = "21:00:00";
+        const uviStyle = {
+          borderRadius: "0.25rem",
+          fontSize: "1rem",
+          padding: "5px",
         };
 
-        const forecasts = response.data.list.filter(element => element.dt_txt.includes(currentTimeBlock));
-        console.log(forecasts);
+        if (uvi < 3) {
+          // Give it the color of green
+          uviStyle.backgroundColor = "#99cc00";
+        } else if (uvi >= 3 && uvi < 6) {
+          // Give it the color of yellow
+          uviStyle.backgroundColor = "#ffff01";
+        } else if (uvi >= 6 && uvi < 8) {
+          // Give it the color of orange
+          uviStyle.backgroundColor = "#ff9928";
+        } else if (uvi >= 8 && uvi < 11) {
+          // Give it the color of red
+          uviStyle.backgroundColor = "#ff0100";
+        } else if (uvi >= 11) {
+          // Give it the color of purple
+          uviStyle.backgroundColor = "#be00be";
+        }
 
-        setForecastCards(
-          <div className="col-12">
-            <h3 style={{ marginTop: "20px" }}>5-Day Forecast</h3>
-            <div className="row" style={{ marginLeft: "-15px", marginRight: "-15px" }}>
-              {forecasts.map(forecast => (
-                <ForecastCard
-                  key={forecast.dt}
-                  date={moment(forecast.dt_txt).format("MM/DD/YYYY")}
-                  iconURL={"https://openweathermap.org/img/w/" + forecast.weather[0].icon + ".png"}
-                  temp={forecast.main.temp}
-                  humidity={forecast.main.humidity}
-                />
-              ))}
-            </div>
-          </div>
-        )
+        setCurrentWeatherCard(
+          <CurrentWeather
+            cityName={cityName}
+            currentDate={currentDate}
+            iconURL={iconURL}
+            temp={temp}
+            humidity={humidity}
+            windSpeed={windSpeed}
+            uvi={uvi}
+            uviStyle={uviStyle}
+          />
+        );
       });
-  }
+    });
+
+    API.getForecast(city).then((response) => {
+      const currentHour = moment().format("HH");
+
+      // Set default time block of three hours to 12 AM
+      let currentTimeBlock = "00:00:00";
+
+      // Change the current time block of three hours based on currentHour
+      if (currentHour >= 0 && currentHour < 3) {
+        currentTimeBlock = "00:00:00";
+      } else if (currentHour >= 3 && currentHour < 6) {
+        currentTimeBlock = "03:00:00";
+      } else if (currentHour >= 6 && currentHour < 9) {
+        currentTimeBlock = "06:00:00";
+      } else if (currentHour >= 9 && currentHour < 12) {
+        currentTimeBlock = "09:00:00";
+      } else if (currentHour >= 12 && currentHour < 15) {
+        currentTimeBlock = "12:00:00";
+      } else if (currentHour >= 15 && currentHour < 18) {
+        currentTimeBlock = "15:00:00";
+      } else if (currentHour >= 18 && currentHour < 21) {
+        currentTimeBlock = "18:00:00";
+      } else if (currentHour >= 21 && currentHour < 24) {
+        currentTimeBlock = "21:00:00";
+      }
+
+      const forecasts = response.data.list.filter((element) =>
+        element.dt_txt.includes(currentTimeBlock)
+      );
+
+      setForecastCards(
+        <div className="col-12">
+          <h3 style={{ marginTop: "20px" }}>5-Day Forecast</h3>
+          <div
+            className="row"
+            style={{ marginLeft: "-15px", marginRight: "-15px" }}
+          >
+            {forecasts.map((forecast) => (
+              <ForecastCard
+                key={forecast.dt}
+                date={moment(forecast.dt_txt).format("MM/DD/YYYY")}
+                iconURL={
+                  "https://openweathermap.org/img/w/" +
+                  forecast.weather[0].icon +
+                  ".png"
+                }
+                temp={forecast.main.temp}
+                humidity={forecast.main.humidity}
+              />
+            ))}
+          </div>
+        </div>
+      );
+    });
+  };
 
   return (
     <Wrapper>
@@ -181,7 +180,7 @@ function App() {
             handleFormSubmit={handleFormSubmit}
             searchInput={searchInput}
           />
-          {cities.map(city => (
+          {cities.map((city) => (
             <SearchHistory
               key={city}
               searchInput={city}
@@ -192,9 +191,7 @@ function App() {
         <div className="col-sm-9">
           <Container>
             <Row>
-              <div className="col-12">
-                {currentWeatherCard}              
-              </div>
+              <div className="col-12">{currentWeatherCard}</div>
               {forecastCards}
             </Row>
           </Container>
