@@ -69,7 +69,7 @@ function App() {
         const temp = response.data.main.temp;
         const humidity = response.data.main.humidity;
         const windSpeed = response.data.wind.speed;
-        const iconURL = "http://openweathermap.org/img/w/" + response.data.weather[0].icon + ".png";
+        const iconURL = "https://openweathermap.org/img/w/" + response.data.weather[0].icon + ".png";
         console.log("Temperature is " + temp + " degrees Fahrenheit");
         console.log("Humidity is " + humidity + " %");
         console.log("Wind speed is " + windSpeed + " MPH");
@@ -79,7 +79,7 @@ function App() {
 
         API.getUVI(lat, lon)
           .then(uviResponse => {
-            const uvi = uviResponse.data.value;
+            const uvi = uviResponse.current.uvi;
             console.log("UVI is " + uvi);
 
             const uviStyle = {
@@ -160,7 +160,7 @@ function App() {
                 <ForecastCard
                   key={forecast.dt}
                   date={moment(forecast.dt_txt).format("MM/DD/YYYY")}
-                  iconURL={"http://openweathermap.org/img/w/" + forecast.weather[0].icon + ".png"}
+                  iconURL={"https://openweathermap.org/img/w/" + forecast.weather[0].icon + ".png"}
                   temp={forecast.main.temp}
                   humidity={forecast.main.humidity}
                 />

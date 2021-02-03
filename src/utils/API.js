@@ -11,6 +11,6 @@ export default {
         return axios.get("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&apikey=" + apikey);
     },
     getUVI: (lat, lon) => {
-        return axios.get("https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&apikey=" + apikey);
+        return axios.get("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&apikey=" + apikey);
     }
 };
